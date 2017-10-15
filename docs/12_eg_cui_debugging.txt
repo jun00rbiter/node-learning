@@ -1,0 +1,125 @@
+jun00rbiter@WINDOWS10 MINGW64 ~/node-learning (master)
+$ node inspect src/11_console.js
+< Debugger listening on ws://127.0.0.1:9229/e1e91b55-541b-462a-8212-778ce3334bfa
+< For help see https://nodejs.org/en/docs/inspector
+Break on start in src\11_console.js:1
+> 1 (function (exports, require, module, __filename, __dirname) { // 1.1. コンソール出力
+  2
+  3 // 1. processクラスのstdout/stderrを使用 ==========================
+debug> n
+break in src\11_console.js:5
+  3 // 1. processクラスのstdout/stderrを使用 ==========================
+  4 // stdoutに出力
+> 5 process.stdout.write("output log by stdout.write.\n");
+  6 // stderrに出力
+  7 process.stderr.write("output log by stderr.write.\n");
+debug> n
+< output log by stdout.write.
+break in src\11_console.js:7
+  5 process.stdout.write("output log by stdout.write.\n");
+  6 // stderrに出力
+> 7 process.stderr.write("output log by stderr.write.\n");
+  8
+  9 // 2. consoleクラスを使用 =========================================
+debug> n
+< output log by stderr.write.
+break in src\11_console.js:11
+  9 // 2. consoleクラスを使用 =========================================
+ 10 // stdoutに出力
+>11 console.log("output log by console.log.");
+ 12 console.info("output log by console.info.");
+ 13 // stderrに出力
+debug> list(10)
+  1 (function (exports, require, module, __filename, __dirname) { // 1.1. コンソール出力
+  2
+  3 // 1. processクラスのstdout/stderrを使用 ==========================
+  4 // stdoutに出力
+  5 process.stdout.write("output log by stdout.write.\n");
+  6 // stderrに出力
+  7 process.stderr.write("output log by stderr.write.\n");
+  8
+  9 // 2. consoleクラスを使用 =========================================
+ 10 // stdoutに出力
+>11 console.log("output log by console.log.");
+ 12 console.info("output log by console.info.");
+ 13 // stderrに出力
+ 14 console.error("output log by console.error.");
+ 15
+ 16 // 3. log4js-nodeパッケージを使用（!!推奨!!） ======================
+ 17 var log4js = require('log4js');
+ 18 var logger = log4js.getLogger();
+ 19 // 出力ログレベルをtrace以上の指定（デフォルトoff：ログ出力しない）
+ 20 logger.level = 'trace';
+ 21 // レベル別ログ出力
+debug> sb(17)
+ 12 console.info("output log by console.info.");
+ 13 // stderrに出力
+ 14 console.error("output log by console.error.");
+ 15
+ 16 // 3. log4js-nodeパッケージを使用（!!推奨!!） ======================
+>17 var log4js = require('log4js');
+ 18 var logger = log4js.getLogger();
+ 19 // 出力ログレベルをtrace以上の指定（デフォルトoff：ログ出力しない）
+ 20 logger.level = 'trace';
+ 21 // レベル別ログ出力
+ 22 logger.trace('output log by log4js.trace.');
+debug> c
+< output log by console.log.
+< output log by console.error.
+< output log by console.info.
+break in src\11_console.js:17
+ 15
+ 16 // 3. log4js-nodeパッケージを使用（!!推奨!!） ======================
+>17 var log4js = require('log4js');
+ 18 var logger = log4js.getLogger();
+ 19 // 出力ログレベルをtrace以上の指定（デフォルトoff：ログ出力しない）
+debug> watch('logger')
+debug> n
+break in src\11_console.js:18
+Watchers:
+  0: logger = undefined
+
+ 16 // 3. log4js-nodeパッケージを使用（!!推奨!!） ======================
+*17 var log4js = require('log4js');
+>18 var logger = log4js.getLogger();
+ 19 // 出力ログレベルをtrace以上の指定（デフォルトoff：ログ出力しない）
+ 20 logger.level = 'trace';
+debug> n
+break in src\11_console.js:20
+Watchers:
+  0: logger =
+    { category: 'default',
+      dispatch: ,
+      context: Object }
+
+ 18 var logger = log4js.getLogger();
+ 19 // 出力ログレベルをtrace以上の指定（デフォルトoff：ログ出力しない）
+>20 logger.level = 'trace';
+ 21 // レベル別ログ出力
+ 22 logger.trace('output log by log4js.trace.');
+debug> n
+break in src\11_console.js:22
+Watchers:
+  0: logger =
+    { category: 'default',
+      dispatch: ,
+      context: Object }
+
+ 20 logger.level = 'trace';
+ 21 // レベル別ログ出力
+>22 logger.trace('output log by log4js.trace.');
+ 23 logger.debug('output log by log4js.debug.');
+ 24 logger.info('output log by log4js.info.');
+debug> c
+< [2017-10-15 15:20:41.281] [TRACE] default - output log by log4js.trace.
+< [2017-10-15 15:20:41.282] [DEBUG] default - output log by log4js.debug.
+< [2017-10-15 15:20:41.282] [INFO] default - output log by log4js.info.
+< [2017-10-15 15:20:41.283] [WARN] default - output log by log4js.warn.
+< [2017-10-15 15:20:41.283] [ERROR] default - output log by log4js.error.
+< [2017-10-15 15:20:41.283] [FATAL] default - output log by log4js.fatal.
+< Debugger attached.
+< Waiting for the debugger to disconnect...
+debug> .exit
+
+jun00rbiter@WINDOWS10 MINGW64 ~/node-learning (master)
+$
