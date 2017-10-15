@@ -4,7 +4,11 @@
 開発するにあたって、プログラムの状態を表示するためにコンソール出力をする。
 
 ソースコード
-: src/11_console.js
+: [src/11_console.js](../src/11_console.js)
+
+実行方法
+
+    node src/11_conosole.js
 
 3種のコンソール出力の方法
 ----
