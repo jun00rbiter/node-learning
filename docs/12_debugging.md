@@ -3,7 +3,7 @@
 
 Node.jsのプログラムを実行しながらデバッグする。
 
-CUIでのデバッグ
+CUIでのデバッグ(built-in debugger)
 ----
 
 メリット
@@ -32,3 +32,32 @@ CUIでのデバッグ
 |unwatch('xxx')|xxxの内容出力を取り消す(ウォッチ削除)|
 |sb(line)|ブレークポイントを設定|
 |cb(line)|ブレークポイントを削除|
+
+GUIでのデバッグ(Google Chrome 使用)
+----
+
+Node.jsはV8エンジンを使用したホスト動作のjavascriptのため、Chromeと親和性が高い。Atom等でデバッグすることもできるが、機能面でChromeが優勢。
+
+### 実行方法
+
+* 通常実行
+
+        node --inspect src/11_console.js
+
+* プログラム開始時ブレーク(PORT指定)
+
+    ~~~
+    $ node --inspect-brk=9229 src/11_console.js
+    Debugger listening on ws://127.0.0.1:9229/6d7dfa48-9395-4ad3-8074-0992cb05764f
+    For help see https://nodejs.org/en/docs/inspector
+    ~~~
+
+    Chromeで`chrome://inspect`にアクセス。
+
+    ![](images/12-001.png)
+
+    `Remote Target`からアタッチしたいターゲットの「inspect」をクリックしてデバッグを開始する。
+
+    ![](images/12-002.png)
+
+> Chromeの拡張機能に NIM (Node.js Inspector Manager)を入れておくと、ポートを監視してくれて自動的にデバッガーが表示されるので便利。(Linux版Chromeだとうまくいかないことあり。)
